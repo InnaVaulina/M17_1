@@ -1,0 +1,2 @@
+﻿CREATE USER [User3] FOR LOGIN [Login3];
+
