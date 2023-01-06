@@ -61,8 +61,8 @@ namespace M17_Task1
                 AttachDBFilename = path1,
                 IntegratedSecurity = false,
                 Pooling = false,
-                UserID = "Login2",
-                Password = "j$k{rncUxrN.kp&diuz?nbzcmsFT7_&#$!~<vemguK~oYeba"
+                UserID = "Robert2",
+                Password = "0000@2"
             };
 
             SqlConnectionStringBuilder strCon3 = new SqlConnectionStringBuilder()
@@ -71,15 +71,15 @@ namespace M17_Task1
                 AttachDBFilename = path1,
                 IntegratedSecurity = false,
                 Pooling = false,
-                UserID = "Login3",
-                Password = "aptkkvbqimfg9chinJi{+xaemsFT7_&#$!~<kl~zemOcnMji"
+                UserID = "Maria4",
+                Password = "0000@4"
             };
 
-            firstAvm = new SQLConnectionAVM("User1", new SqlConnection() { ConnectionString = strCon1.ConnectionString });
+            firstAvm = new SQLConnectionAVM(new SqlConnection() { ConnectionString = strCon1.ConnectionString });
             first.DataContext = firstAvm;
-            secondAvm = new SQLConnectionAVM("User2", new SqlConnection() { ConnectionString = strCon2.ConnectionString });
+            secondAvm = new SQLConnectionAVM(new SqlConnection() { ConnectionString = strCon2.ConnectionString });
             second.DataContext = secondAvm;
-            thirdAvm = new SQLConnectionAVM("User3", new SqlConnection() { ConnectionString = strCon3.ConnectionString });
+            thirdAvm = new SQLConnectionAVM(new SqlConnection() { ConnectionString = strCon3.ConnectionString });
             third.DataContext = thirdAvm;
 
             fourthAvm = new OleConnectionAVM("Database1", new OleDbConnection() { ConnectionString = con1 });

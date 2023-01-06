@@ -1,0 +1,42 @@
+﻿<Window x:Class="M17_task21.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:M17_task21"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+ 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Menu x:Name="usermenu" Grid.Row="0" Margin="0,0,0,0" ItemsSource="{Binding}">
+            <Menu.ItemTemplate>
+
+ 
+                        <HierarchicalDataTemplate DataType="{x:Type local:Role}" ItemsSource="{Binding Path=Permissions}">
+                            <TextBlock Text="{Binding RoleName}"/>
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate DataType="{x:Type local:Permission}">
+                            <TextBlock Text="{Binding BObject}">
+                               
+                            </TextBlock>
+                        </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+
+
+                
+            </Menu.ItemTemplate>
+       
+        </Menu>
+
+
+        
+
+    </Grid>
+</Window>

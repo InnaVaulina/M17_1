@@ -1,0 +1,163 @@
+﻿<Window x:Class="M17_task21.SellerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:M17_task21"
+        mc:Ignorable="d"
+        Title="SellerWindow" Height="600" Width="800" Closed="OnClosed">
+    <Grid x:Name="sellerFunctions">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="3">
+            <MenuItem Header="Выход" Command="{Binding Exit}"/>
+        </Menu>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <StackPanel >
+                <TextBlock Text="Таблицы"/>
+                <Border>
+                    <ListBox x:Name="objList"  ItemsSource="{Binding BObjects}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <GridSplitter  Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Height="5" Margin="0,0,0,0" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="5"/>
+        <GridSplitter  Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="5" Margin="0,0,0,0" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="5"/>
+
+
+        <TabControl x:Name="sellerWorkTableShow" 
+                    Grid.Row="1" 
+                    Grid.Column="2" 
+                    DataContext="{Binding WorkTable}">
+            
+            <TabItem Header="{Binding TableName}">
+                <Grid DataContext="{Binding Show}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Menu Grid.Row="0">
+                        <MenuItem Header="Обновить" Command="{Binding OpenTable}"/>
+                    </Menu>
+                    <StackPanel Grid.Row="1" Orientation="Vertical">
+                        <TextBlock  Text="{Binding Path=Main.Query}"/>
+                        <Menu>
+                            <MenuItem Header="В начало" Command="{Binding GoStart}"/>
+                            <MenuItem Header="&lt;-" Command="{Binding GoLeft}"/>
+                            <MenuItem Header="-&gt;" Command="{Binding GoRight}"/>
+                            <MenuItem Header="В конец" Command="{Binding GoFinish}"/>
+                        </Menu>
+                    </StackPanel>
+                    <DataGrid Grid.Row="2" Name="dataShow" 
+                      ItemsSource="{Binding Path=Dt}"
+                      SelectionMode="Single"
+                      CanUserAddRows="False">
+                        
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Выборка" DataContext="{Binding Select}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Menu Grid.Row="0">
+                        <MenuItem Header="Очистить" Command="{Binding BrushRequestTable}"/>
+                        <MenuItem x:Name="Request" Header="Выполнить" Command="{Binding SelectData}"/>
+
+                    </Menu>
+                    <TextBlock Grid.Row="1" Text="{Binding Path=SelectQueryString}"/>
+
+                    <DataGrid Grid.Row="2" Name="dataRequest"  
+                      ItemsSource="{Binding Path=Columns}" 
+                      AutoGenerateColumns="False"                       
+                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Имя столбца" Binding="{Binding Path=DBColumnName}"/>
+                            <DataGridTemplateColumn Header="Операция"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Text="{Binding Path=Compare}">
+                                            <ComboBoxItem Content="="/>
+                                            <ComboBoxItem Content="&lt;"/>
+                                            <ComboBoxItem Content="&gt;"/>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Значение" Binding="{Binding Path=Value}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="addFirstCondition" Header="Добавить условие" Command="{Binding AddCondition}"/>
+                                <MenuItem x:Name="addORcondotion" Header="OR условие" Command="{Binding AddCondition}" CommandParameter="OR"/>
+                                <MenuItem x:Name="addANDcondotion" Header="AND условие" Command="{Binding AddCondition}" CommandParameter="AND"/>
+                                <MenuItem x:Name="deleteCondition" Header="Удалить условие" Command="{Binding DeleteCondition}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="3" Grid.Column="2">
+            <TextBlock Text="Счет"/>
+            <TextBlock>
+                <Run Text="Покупатель: "/>
+                <Run Text="{Binding Path=Buyer.FamilyName}"/>
+                <Run Text="{Binding Path=Buyer.FirstName}"/>
+                <Run Text="{Binding Path=Buyer.Patronymic}"/>
+                <Run Text="Email: "/>
+                <Run Text="{Binding Path=Buyer.Email}"/>
+            </TextBlock>
+            <TextBlock Text="Товары: "/>
+            <DataGrid x:Name="productList" ItemsSource="{Binding Products}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="deleteRow" Header="Удалить" Command="{Binding DeleteProduct}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column="0">
+            <TextBlock>Новый покупатель:</TextBlock>
+            <TextBlock>Фамилия:</TextBlock>
+            <TextBox x:Name="familyname"/>
+            <TextBlock>Имя:</TextBlock>
+            <TextBox x:Name="firstname"/>
+            <TextBlock>Отчетсво:</TextBlock>
+            <TextBox x:Name="patronymic"/>
+            <TextBlock>телефон:</TextBlock>
+            <TextBox x:Name="phone"/>
+            <TextBlock>емейл:</TextBlock>
+            <TextBox x:Name="email"/>
+            <Button Content="Запомнить и перенести в счет" Command="{Binding SaveNewBuyer}"/>
+        </StackPanel>
+ 
+
+    </Grid>
+</Window>

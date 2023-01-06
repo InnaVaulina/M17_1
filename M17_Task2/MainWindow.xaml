@@ -1,0 +1,141 @@
+﻿<Window x:Class="M17_Task2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:M17_Task2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!--шаблон элекмента реадктирования таблицы-->
+        <DataTemplate x:Key="EditDTable">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Menu Grid.Row="0">
+                    <MenuItem Header="Очистить" Command="{Binding BrushRequestTable}"/>
+                    <MenuItem Header="Выполнить" Command="{Binding MakeaRequest}"/>
+                </Menu>
+                <TextBlock Grid.Row="1" Text=""/>
+
+                <DataGrid Grid.Row="2" Name="dataRequest"  
+                      ItemsSource="{Binding Path=Columns}" 
+                      AutoGenerateColumns="False"                       
+                      >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя столбца" Binding="{Binding Path=DBColumnName}"/>
+                        <DataGridTextColumn Header="Значение" Binding="{Binding Path=Value}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </DataTemplate>
+
+
+        <!--шаблон элекмента отображения таблицы-->
+        <DataTemplate x:Key="showTable">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Menu Grid.Row="0">
+                    <MenuItem Header="Обновить" Command="{Binding OpenTable}"/>
+
+                </Menu>
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <TextBlock  Text="{Binding Path=Main.Query}"/>
+                    <Menu>
+                        <MenuItem Header="В начало" Command="{Binding GoStart}"/>
+                        <MenuItem Header="&lt;-" Command="{Binding GoLeft}"/>
+                        <MenuItem Header="-&gt;" Command="{Binding GoRight}"/>
+                        <MenuItem Header="В конец" Command="{Binding GoFinish}"/>
+                    </Menu>
+                </StackPanel>
+
+                <DataGrid Grid.Row="2" Name="dataShow" 
+                      ItemsSource="{Binding Path=Dt}"
+                      SelectionMode="Single"
+                      CanUserAddRows="False">
+                    
+                </DataGrid>
+
+            </Grid>
+        </DataTemplate>
+
+        <!--шаблон элекмента интерфейса выборки из таблицы-->
+        <DataTemplate x:Key="select">
+            
+
+        </DataTemplate>
+        
+    </Window.Resources>
+
+    <Grid x:Name="workTableShow">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Column="0">
+            <TabItem Header="Добавить" ContentTemplate="{StaticResource EditDTable}" Content="{Binding Insert}"/>
+            <TabItem Header="Изменить" ContentTemplate="{StaticResource EditDTable}" Content="{Binding Update}"/>
+            <TabItem Header="Удалить" ContentTemplate="{StaticResource EditDTable}" Content="{Binding Delete}"/>
+
+        </TabControl>
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" Height="100" Margin="0,0,0,0" VerticalAlignment="Top" Width="5"/>
+        <TabControl Grid.Column="2">
+            <TabItem Header="{Binding TableName}" ContentTemplate="{StaticResource showTable}" Content="{Binding Show}"/>
+            <TabItem Header="Выборка" DataContext="{Binding Select}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Menu Grid.Row="0">
+                        <MenuItem Header="Очистить" Command="{Binding BrushRequestTable}"/>
+                        <MenuItem x:Name="Request" Header="Выполнить" Command="{Binding SelectData}"/>
+
+                    </Menu>
+                    <TextBlock Grid.Row="1" Text="{Binding Path=SelectQueryString}"/>
+
+                    <DataGrid Grid.Row="2" Name="dataRequest"  
+                      ItemsSource="{Binding Path=Columns}" 
+                      AutoGenerateColumns="False"                       
+                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Имя столбца" Binding="{Binding Path=DBColumnName}"/>
+                            <DataGridTemplateColumn Header="Операция"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Text="{Binding Path=Compare}">
+                                            <ComboBoxItem Content="="/>
+                                            <ComboBoxItem Content="&lt;"/>
+                                            <ComboBoxItem Content="&gt;"/>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Значение" Binding="{Binding Path=Value}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="addFirstCondition" Header="Добавить условие" Command="{Binding AddCondition}"/>
+                                <MenuItem x:Name="addORcondotion" Header="OR условие" Command="{Binding AddCondition}" CommandParameter="OR"/>
+                                <MenuItem x:Name="addANDcondotion" Header="AND условие" Command="{Binding AddCondition}" CommandParameter="AND"/>
+                                <MenuItem x:Name="deleteCondition" Header="Удалить условие" Command="{Binding DeleteCondition}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+
+</Window>
