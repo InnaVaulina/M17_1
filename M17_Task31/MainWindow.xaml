@@ -1,11 +1,11 @@
-﻿<Window x:Class="M17_task21.MainWindow"
+﻿<Window x:Class="M17_Task31.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:M17_task21"
+        xmlns:local="clr-namespace:M17_Task31"
         mc:Ignorable="d"
-        Title="Авторизация" MaxHeight="170" MaxWidth="340">
+                Title="Авторизация" MaxHeight="170" MaxWidth="340">
     <Grid>
         <Border Margin="10,10,10,10">
             <StackPanel Margin="0,0,0,0">
@@ -20,11 +20,8 @@
                         VerticalAlignment="Top" 
                         Margin="10,10,10,10"
                         Click="Button_Click" />
-       
+
             </StackPanel>
         </Border>
-        
-        
-        
     </Grid>
 </Window>
