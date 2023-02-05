@@ -93,16 +93,16 @@
     <Compile Include="VM\Delegates\Delegates.cs" />
     <Compile Include="VM\Interfaces\Interface1.cs" />
     <Compile Include="VM\ManagerRoleAVM.cs" />
-    <Compile Include="VM\Obj\Cell.cs" />
-    <Compile Include="VM\Obj\Query.cs" />
-    <Compile Include="VM\Obj\DBObject\Buyers.cs" />
-    <Compile Include="VM\Obj\DBObject\Products.cs" />
-    <Compile Include="VM\Obj\Row.cs" />
-    <Compile Include="VM\Obj\EditAVM.cs" />
-    <Compile Include="VM\Obj\RequestAWM.cs" />
-    <Compile Include="VM\Obj\ShowTableAVM.cs" />
-    <Compile Include="VM\Obj\TableAVM.cs" />
-    <Compile Include="VM\Obj\TableEditAVM.cs" />
+    <Compile Include="VM\Cell.cs" />
+    <Compile Include="VM\Query.cs" />
+    <Compile Include="VM\Buyers.cs" />
+    <Compile Include="VM\Products.cs" />
+    <Compile Include="VM\Row.cs" />
+    <Compile Include="VM\EditAVM.cs" />
+    <Compile Include="VM\RequestAWM.cs" />
+    <Compile Include="VM\ShowTableAVM.cs" />
+    <Compile Include="VM\TableAVM.cs" />
+    <Compile Include="VM\TableEditAVM.cs" />
     <Compile Include="VM\UserVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +169,9 @@
       <DependentUpon>MyFirstDBModel.edmx</DependentUpon>
       <LastGenOutput>MyFirstDBModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="VM\Obj\DBObject\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
